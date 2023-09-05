@@ -1,0 +1,6 @@
+# ignoring items that don't need to be in the docker image
+Dockerfile
+.dockerignore
+.gitignore
+build
+node_modules
