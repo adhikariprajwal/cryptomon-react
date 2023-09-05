@@ -1,12 +1,12 @@
-FROM node:18-alpine
+FROM node:20-alpine
 WORKDIR /react-internship-docker/
 COPY public/ /react-internship-docker/public
 
-FROM node:18-alpine
+FROM node:20-alpine
 WORKDIR /react-internship-docker/
 COPY src/ /react-internship-docker/src
 
-FROM node:18-alpine
+FROM node:20-alpine
 WORKDIR /react-internship-docker/
 COPY package.json  /react-internship-docker/
 
