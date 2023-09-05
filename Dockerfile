@@ -1,14 +1,14 @@
 FROM node:18-alpine
 WORKDIR /react-internship-docker/
-COPY package.json  /react-internship-docker/
-
-FROM node:18-alpine
-WORKDIR /react-internship-docker/
 COPY public/ /react-internship-docker/public
 
 FROM node:18-alpine
 WORKDIR /react-internship-docker/
 COPY src/ /react-internship-docker/src
+
+FROM node:18-alpine
+WORKDIR /react-internship-docker/
+COPY package.json  /react-internship-docker/
 
 RUN npm install
 RUN npm run build
