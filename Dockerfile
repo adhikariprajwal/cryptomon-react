@@ -1,4 +1,3 @@
-MAINTAINER ASONGALEM ACHANBENG
 FROM node:18-alpine
 WORKDIR /react-internship-docker/
 COPY public/ /react-internship-docker/public
