@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:19.0.0-alpine3.16
 WORKDIR /react-internship-docker/
 COPY public/ src/  /react-internship-docker/
 COPY package.json  /react-internship-docker/
