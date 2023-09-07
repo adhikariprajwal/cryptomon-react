@@ -1,20 +1,28 @@
 FROM node:18-alpine as builder
+COPY package.json ./
+# Install the dependencies and make the folder
+RUN npm install && mkdir /react-ui && mv ./node_modules ./react-ui
 
-RUN apk add --no-cache python3-dev gcc libc-dev musl-dev
-
-WORKDIR /app
-
-
-COPY package*.json ./
-RUN npm install
+WORKDIR /react-ui
 
 COPY . .
 
+# Build the project and copy the files
 RUN npm run build
+
 
 FROM nginx:alpine
 
-COPY --from=builder /app/build /usr/share/nginx/html
+#!/bin/sh
 
-CMD ["nginx", "-g", "daemon off;"]
-CMD ["npm", "start"]
+COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
+
+## Remove default nginx index page
+RUN rm -rf /usr/share/nginx/html/*
+
+# Copy from the stahg 1
+COPY --from=builder /react-ui/build /usr/share/nginx/html
+
+EXPOSE 3000 80
+
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
