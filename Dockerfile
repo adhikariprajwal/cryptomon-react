@@ -1,14 +1,20 @@
-FROM node:18-alpine AS BUILD_IMAGE
-WORKDIR /react-internship-docker/
-COPY  package.json .
-RUN npm install --production
+FROM node:18-alpine as builder
+
+RUN apk add --no-cache python3-dev gcc libc-dev musl-dev
+
+WORKDIR /app
+
+
+COPY package*.json ./
+RUN npm install
+
 COPY . .
+
 RUN npm run build
 
-FROM node:18-alpine 
-WORKDIR /react-internship-docker/
-COPY --from=BUILD_IMAGE /react-internship-docker/build ./build
-EXPOSE 3000
+FROM nginx:alpine
+
+COPY --from=builder /app/build /usr/share/nginx/html
+
+CMD ["nginx", "-g", "daemon off;"]
 CMD ["npm", "start"]
-
-
