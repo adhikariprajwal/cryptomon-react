@@ -1,10 +1,20 @@
-MAINTAINER ASONGALEM ACHANBENG
-FROM node:18-alpine
-WORKDIR /react-internship-docker/
-COPY public/ /react-internship-docker/public
-COPY src/ /react-internship-docker/src
-COPY package.json  /react-internship-docker/
+FROM node:18-alpine as builder
+
+RUN apk add --no-cache python3-dev gcc libc-dev musl-dev
+
+WORKDIR /app
+
+
+COPY package*.json ./
 RUN npm install
-EXPOSE 3000
+
+COPY . .
+
+RUN npm run build
+
+FROM nginx:alpine
+
+COPY --from=builder /app/build /usr/share/nginx/html
+
+CMD ["nginx", "-g", "daemon off;"]
 CMD ["npm", "start"]
-RUN echo "end of Dockerfile script"

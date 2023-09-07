@@ -1,6 +1,9 @@
 # ignoring items that don't need to be in the docker image
 Dockerfile
 .dockerignore
+.git
 .gitignore
-build
 node_modules
+npm-debug.log
+dist/**
+
